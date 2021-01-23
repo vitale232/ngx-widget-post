@@ -12,8 +12,39 @@ import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-form-widget',
-  templateUrl: './form-widget.component.html',
-  styleUrls: ['./form-widget.component.css'],
+  template: `
+    <h3>Choose a Block Group</h3>
+
+    <form [formGroup]="form">
+      <mat-form-field appearance="outline">
+        <mat-label>Block Group</mat-label>
+        <mat-select formControlName="blockGroup">
+          <mat-option *ngFor="let group of blockGroups" [value]="group">
+            {{ group }}
+          </mat-option>
+        </mat-select>
+        <mat-hint>{{ blockGroups?.length }} Block Groups Available</mat-hint>
+      </mat-form-field>
+    </form>
+  `,
+  styles: [
+    `
+      :host {
+        width: 100%;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      form {
+        width: 100%;
+      }
+      mat-form-field {
+        width: 100%;
+      }
+      h3 {
+        margin-bottom: 0.25rem;
+      }
+    `,
+  ],
 })
 export class FormWidgetComponent implements OnInit, OnDestroy {
   @Input() public blockGroups: string[] = undefined;

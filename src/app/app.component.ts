@@ -2,8 +2,31 @@ import { Component, NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  template: `
+    <h1>Angular Component as a Widget!</h1>
+
+    <app-esri-map
+      (viewReady)="onViewReady($event)"
+      (layerReady)="onLayerReady($event)"
+      (layerViewReady)="onLayerViewReady($event)"
+    >
+      <app-form-widget
+        *appNgxWidget="view; position: { position: 'bottom-right', index: 0 }"
+        class="ngx-widget"
+        [blockGroups]="blockGroups"
+        (valueChange)="onValueChange($event)"
+      ></app-form-widget>
+    </app-esri-map>
+  `,
+  styles: [
+    `
+      .ngx-widget {
+        width: 200px;
+        height: 120px;
+        background-color: white;
+      }
+    `,
+  ],
 })
 export class AppComponent {
   public view: __esri.MapView = undefined;
@@ -53,9 +76,5 @@ export class AppComponent {
 
   onLayerViewReady(layerView: __esri.FeatureLayerView): void {
     this.layerView = layerView;
-  }
-
-  onClear(): void {
-    this.highlightHandle?.remove();
   }
 }

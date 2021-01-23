@@ -23,8 +23,23 @@ import config from '@arcgis/core/config.js';
  */
 @Component({
   selector: 'app-esri-map',
-  templateUrl: './esri-map.component.html',
-  styleUrls: ['./esri-map.component.css'],
+  template: ` <div #mapViewNode></div> `,
+  styles: [
+    `
+      .esri-view {
+        padding: 0;
+        margin: 0;
+        height: 60vh;
+        width: 90%;
+      }
+      #mapViewNode {
+        padding: 0;
+        margin: 0;
+        height: 60vh;
+        width: 90%;
+      }
+    `,
+  ],
 })
 export class EsriMapComponent implements OnInit, OnDestroy {
   @Output() public viewReady = new EventEmitter<__esri.MapView>();
