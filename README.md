@@ -1,3 +1,8 @@
+# License
+
+The code in this repository is based on an Esri example, which is licensed under the Apache 2.0 license. Please visit the original source code and license here:
+https://github.com/Esri/jsapi-resources/blob/master/license.txt
+
 # NgxWidget
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.1.
