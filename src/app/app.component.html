@@ -1,3 +1,8 @@
 <h1>Angular Component as a Widget!</h1>
 
-<app-esri-map></app-esri-map>
+<app-esri-map (viewReady)="onViewReady($event)">
+  <div
+    *appNgxWidget="view; position: { position: 'bottom-right', index: 0 }"
+    class="ngx-widget"
+  ></div>
+</app-esri-map>

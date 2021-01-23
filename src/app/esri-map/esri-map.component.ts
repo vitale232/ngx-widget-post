@@ -5,6 +5,8 @@ import {
   ElementRef,
   OnDestroy,
   NgZone,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
@@ -25,12 +27,12 @@ import config from '@arcgis/core/config.js';
   styleUrls: ['./esri-map.component.css'],
 })
 export class EsriMapComponent implements OnInit, OnDestroy {
-  private view: any = null;
+  @Output() public viewReady = new EventEmitter<__esri.MapView>();
 
   // The <div> where we will place the map
   @ViewChild('mapViewNode', { static: true }) private mapViewEl: ElementRef;
 
-  title = 'ng-cli';
+  private view: __esri.MapView | null = null;
 
   constructor(private zone: NgZone) {}
 
@@ -42,12 +44,10 @@ export class EsriMapComponent implements OnInit, OnDestroy {
 
     this.zone.runOutsideAngular(() => {
       // Initialize MapView and return an instance of MapView
-      this.initializeMap().then(() => {
+      this.initializeMap().then((view) =>
         // The map has been initialized
-        this.zone.run(() => {
-          console.log('mapView ready: ');
-        });
-      });
+        this.zone.run(() => this.viewReady.emit(view))
+      );
     });
   }
 
