@@ -28,6 +28,8 @@ import config from '@arcgis/core/config.js';
 })
 export class EsriMapComponent implements OnInit, OnDestroy {
   @Output() public viewReady = new EventEmitter<__esri.MapView>();
+  @Output() public layerReady = new EventEmitter<__esri.FeatureLayer>();
+  @Output() public layerViewReady = new EventEmitter<__esri.LayerView>();
 
   // The <div> where we will place the map
   @ViewChild('mapViewNode', { static: true }) private mapViewEl: ElementRef;
@@ -71,7 +73,10 @@ export class EsriMapComponent implements OnInit, OnDestroy {
       map,
     });
 
-    layer.load().then(() => (view.extent = layer.fullExtent));
+    layer.load().then(() => {
+      view.extent = layer.fullExtent;
+      this.layerReady.emit(layer);
+    });
 
     const basemapGallery = new BasemapGallery({
       view,
@@ -84,6 +89,9 @@ export class EsriMapComponent implements OnInit, OnDestroy {
     view.ui.add(bgExpand, 'top-right');
 
     this.view = view;
+
+    this.createLayerView(layer, view);
+
     return this.view.when();
   }
 
@@ -92,5 +100,14 @@ export class EsriMapComponent implements OnInit, OnDestroy {
       // destroy the map view
       this.view.destroy();
     }
+  }
+
+  private createLayerView(
+    layer: __esri.FeatureLayer,
+    view: __esri.MapView
+  ): void {
+    view
+      .whenLayerView(layer)
+      .then((layerView) => this.layerViewReady.emit(layerView));
   }
 }

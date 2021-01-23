@@ -1,0 +1,13 @@
+<h3>Choose a Block Group</h3>
+
+<form [formGroup]="form">
+  <mat-form-field appearance="outline">
+    <mat-label>Choose a Block Group</mat-label>
+    <mat-select formControlName="blockGroup">
+      <mat-option *ngFor="let group of blockGroups" [value]="group">
+        {{ group }}
+      </mat-option>
+    </mat-select>
+    <mat-hint>{{ blockGroups?.length }} Block Groups Available</mat-hint>
+  </mat-form-field>
+</form>

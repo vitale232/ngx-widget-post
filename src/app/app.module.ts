@@ -5,18 +5,24 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EsriMapComponent } from './esri-map/esri-map.component';
 import { NgxWidgetDirective } from './ngx-widget.directive';
+import { FormWidgetComponent } from './form-widget/form-widget.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
     AppComponent,
     EsriMapComponent,
-    NgxWidgetDirective
+    NgxWidgetDirective,
+    FormWidgetComponent,
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

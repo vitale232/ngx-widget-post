@@ -7,7 +7,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
-import { filter, takeUntil, tap } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 
 @Directive({
   selector: '[appNgxWidget]',
@@ -46,10 +46,7 @@ export class NgxWidgetDirective implements OnInit, OnDestroy {
       this.view$.pipe(filter((mapView) => mapView != null)),
       this.position$,
     ])
-      .pipe(
-        tap((x) => console.log({ x })),
-        takeUntil(this._destroy$)
-      )
+      .pipe(takeUntil(this._destroy$))
       .subscribe((params) => this.handleWidget(...params));
   }
 
@@ -67,7 +64,6 @@ export class NgxWidgetDirective implements OnInit, OnDestroy {
     }
 
     if (view != null && position != null) {
-      console.log('view render', view);
       view.ui.add(this.render(), position);
     }
   }
@@ -80,8 +76,6 @@ export class NgxWidgetDirective implements OnInit, OnDestroy {
     const element = embeddedView.rootNodes[0];
 
     this.hasView = true;
-
-    console.log('element', element);
 
     return element;
   }

@@ -1,8 +1,19 @@
 <h1>Angular Component as a Widget!</h1>
 
-<app-esri-map (viewReady)="onViewReady($event)">
+<app-esri-map
+  (viewReady)="onViewReady($event)"
+  (layerReady)="onLayerReady($event)"
+  (layerViewReady)="onLayerViewReady($event)"
+>
   <div
     *appNgxWidget="view; position: { position: 'bottom-right', index: 0 }"
     class="ngx-widget"
-  ></div>
+  >
+    <app-form-widget
+      [blockGroups]="blockGroups"
+      (valueChange)="onValueChange($event)"
+    ></app-form-widget>
+  </div>
 </app-esri-map>
+
+<button (click)="onClear()">clear</button>
