@@ -3,6 +3,16 @@
 Some of the code in this repository is based on an Esri example, which is licensed under the Apache 2.0 license. Please visit the original source code and license here:
 https://github.com/Esri/jsapi-resources/blob/master/license.txt
 
+# What's in the Repo/Branch
+
+This repo contains an example directive showing a technique that can be used to add native Angular components to the [Esri ArcGIS JS API's `MapView`](https://developers.arcgis.com/javascript/). This has the effect of allowing developers the convenience of their preferred framework, modern [Angular](https://angular.io/), while giving the end user a more consistent experience. The component will be added to a corner of the map, like a native Esri widget.
+
+This technique can be used to either supplement or replace [custom JS API widgets](https://developers.arcgis.com/javascript/latest/sample-code/widgets-custom-widget/index.html).
+
+To both experiment with the Beta Esri ES Modules and make this example more forward-thinking, we have selected to use the beta `@arcgis/core` package with version 4.18 of the JS API.
+
+It's also making use of `rxjs@next`, which at the time of this writing, is the beta 7.0 release. This leads to native typing on our complex `NgxWidgetDirective` creation operator, `combineLatest`.
+
 # NgxWidget
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.1.

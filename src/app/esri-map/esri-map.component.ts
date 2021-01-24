@@ -30,13 +30,13 @@ import Legend from '@arcgis/core/widgets/Legend';
         padding: 0;
         margin: 0;
         height: 60vh;
-        width: 90%;
+        width: 100%;
       }
       #mapViewNode {
         padding: 0;
         margin: 0;
         height: 60vh;
-        width: 90%;
+        width: 100%;
       }
     `,
   ],
@@ -88,28 +88,32 @@ export class EsriMapComponent implements OnInit, OnDestroy {
       map,
     });
 
-    layer.load().then(() => {
-      view.extent = layer.fullExtent;
-      this.zone.run(() => this.layerReady.emit(layer));
+    const legend = new Legend({
+      view,
     });
 
     const basemapGallery = new BasemapGallery({
       view,
     });
 
+    const legendExpand = new Expand({
+      content: legend,
+    });
     const bgExpand = new Expand({
       content: basemapGallery,
     });
-    view.ui.add(bgExpand, 'top-right');
 
-    const legend = new Legend({
-      view,
-    });
-    view.ui.add(legend, 'bottom-left');
+    view.ui.add(bgExpand, 'top-right');
+    view.ui.add(legendExpand, 'bottom-left');
 
     this.view = view;
 
     this.createLayerView(layer, view);
+
+    layer.load().then(() => {
+      view.extent = layer.fullExtent;
+      this.zone.run(() => this.layerReady.emit(layer));
+    });
 
     return this.view.when();
   }

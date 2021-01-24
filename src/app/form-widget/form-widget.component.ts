@@ -42,6 +42,7 @@ import { takeUntil } from 'rxjs/operators';
       }
       h3 {
         margin-bottom: 0.25rem;
+        margin-top: -13px;
       }
     `,
   ],
@@ -56,6 +57,7 @@ export class FormWidgetComponent implements OnInit, OnDestroy {
   });
 
   private _destroy$ = new Subject<null>();
+
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
