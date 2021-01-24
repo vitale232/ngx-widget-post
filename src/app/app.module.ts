@@ -8,7 +8,7 @@ import { NgxWidgetDirective } from './ngx-widget.directive';
 import { FormWidgetComponent } from './form-widget/form-widget.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
-
+import { MatButtonModule } from '@angular/material/button';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,6 +21,7 @@ import { MatSelectModule } from '@angular/material/select';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MatSelectModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

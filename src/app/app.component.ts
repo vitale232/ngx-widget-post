@@ -11,12 +11,29 @@ import { Component, NgZone } from '@angular/core';
       (layerViewReady)="onLayerViewReady($event)"
     >
       <app-form-widget
-        *appNgxWidget="view; position: { position: 'bottom-right', index: 0 }"
+        *appNgxWidget="view; position: { position: position, index: 1 }"
         class="ngx-widget"
         [blockGroups]="blockGroups"
         (valueChange)="onValueChange($event)"
       ></app-form-widget>
     </app-esri-map>
+
+    <div class="button-group">
+      <button mat-raised-button (click)="onMoveWidgetClick('top-left')">
+        Move Widget - Top Left
+      </button>
+      <button mat-raised-button (click)="onMoveWidgetClick('top-right')">
+        Move Widget - Top Right
+      </button>
+    </div>
+    <div class="button-group">
+      <button mat-raised-button (click)="onMoveWidgetClick('bottom-left')">
+        Move Widget - Bottom Left
+      </button>
+      <button mat-raised-button (click)="onMoveWidgetClick('bottom-right')">
+        Move Widget - Bottom Right
+      </button>
+    </div>
   `,
   styles: [
     `
@@ -24,6 +41,14 @@ import { Component, NgZone } from '@angular/core';
         width: 200px;
         height: 120px;
         background-color: white;
+      }
+      .button-group {
+        padding-top: 1.5rem;
+        display: flex;
+        justify-content: center;
+      }
+      button {
+        margin-right: 5px;
       }
     `,
   ],
@@ -33,6 +58,7 @@ export class AppComponent {
   public layer: __esri.FeatureLayer;
   public features: __esri.Graphic[];
   public blockGroups: string[];
+  public position = 'bottom-right';
 
   private layerView: __esri.FeatureLayerView;
   private highlightHandle: __esri.Handle;
@@ -70,5 +96,9 @@ export class AppComponent {
 
   onLayerViewReady(layerView: __esri.FeatureLayerView): void {
     this.layerView = layerView;
+  }
+
+  onMoveWidgetClick(position: string): void {
+    this.position = position;
   }
 }
