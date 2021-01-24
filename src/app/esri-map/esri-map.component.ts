@@ -105,7 +105,11 @@ export class EsriMapComponent implements OnInit, OnDestroy {
     const legend = new Legend({
       view,
     });
-    view.ui.add(legend, 'bottom-left');
+    const legendExpand = new Expand({
+      content: legend,
+      expanded: true,
+    });
+    view.ui.add(legendExpand, 'bottom-left');
 
     this.view = view;
 
