@@ -21,7 +21,7 @@ export class NgxWidgetDirective implements OnInit, OnDestroy {
   private readonly _destroy$ = new Subject<null>();
 
   private hasView = false;
-  private _viewEl: HTMLElement | Expand = undefined;
+  private viewElement: HTMLElement | Expand | undefined = undefined;
 
   // Use rxjs to handle `@Input`s reactively
   // Use the selector as the input name to accept as the default input to the directive.
@@ -55,11 +55,6 @@ export class NgxWidgetDirective implements OnInit, OnDestroy {
     this._changeDetection.next(val);
   }
 
-  private readonly _changeDetection = new BehaviorSubject<ChangeDetectionStrategy>(
-    ChangeDetectionStrategy.Default
-  );
-  private readonly changeDetection$ = this._changeDetection.asObservable();
-
   private readonly _view = new BehaviorSubject<__esri.MapView>(undefined);
   private readonly view$ = this._view.asObservable();
 
@@ -84,6 +79,11 @@ export class NgxWidgetDirective implements OnInit, OnDestroy {
     'Expand the widget'
   );
   private readonly expandTooltip$ = this._expandTooltip.asObservable();
+
+  private readonly _changeDetection = new BehaviorSubject<ChangeDetectionStrategy>(
+    ChangeDetectionStrategy.Default
+  );
+  private readonly changeDetection$ = this._changeDetection.asObservable();
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -125,17 +125,17 @@ export class NgxWidgetDirective implements OnInit, OnDestroy {
 
     if (view != null && position != null) {
       if (expand === true) {
-        this._viewEl = new Expand({
+        this.viewElement = new Expand({
           expanded,
           expandIconClass,
           expandTooltip,
           view,
           content: this.render(),
         });
-        view.ui.add(this._viewEl, position);
+        view.ui.add(this.viewElement, position);
       } else {
-        this._viewEl = this.render();
-        view.ui.add(this._viewEl, position);
+        this.viewElement = this.render();
+        view.ui.add(this.viewElement, position);
       }
     }
 
@@ -156,12 +156,12 @@ export class NgxWidgetDirective implements OnInit, OnDestroy {
 
   private clear(view?: __esri.MapView): void {
     if (view) {
-      view.ui.remove(this._viewEl);
+      view.ui.remove(this.viewElement);
     }
 
     this.viewContainerRef.clear();
     this.hasView = false;
-    this._viewEl = null;
+    this.viewElement = null;
   }
 
   private markForCheck(changeDetectionStrategy: ChangeDetectionStrategy): void {
