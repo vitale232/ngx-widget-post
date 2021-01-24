@@ -29,15 +29,13 @@ import { Component, NgZone } from '@angular/core';
   ],
 })
 export class AppComponent {
-  public view: __esri.MapView = undefined;
-  public layer: __esri.FeatureLayer = undefined;
-  public features: __esri.Graphic[] = undefined;
-  public blockGroups: string[] = undefined;
+  public view: __esri.MapView;
+  public layer: __esri.FeatureLayer;
+  public features: __esri.Graphic[];
+  public blockGroups: string[];
 
-  private layerView: __esri.FeatureLayerView = undefined;
+  private layerView: __esri.FeatureLayerView;
   private highlightHandle: __esri.Handle;
-
-  constructor(private ngZone: NgZone) {}
 
   onViewReady(view: __esri.MapView) {
     this.view = view;
@@ -51,13 +49,9 @@ export class AppComponent {
     layer.queryFeatures(query).then((featureSet) => {
       this.features = featureSet.features;
 
-      // The layer lives outside of the zone, so let's bring it back in for Change Detection
-      this.ngZone.run(
-        () =>
-          (this.blockGroups = Array.from(
-            new Set(this.features.map((feat) => feat.getAttribute('NAMELSAD')))
-          ).sort())
-      );
+      this.blockGroups = Array.from(
+        new Set(this.features.map((feat) => feat.getAttribute('NAMELSAD')))
+      ).sort();
     });
   }
 

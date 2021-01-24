@@ -1,20 +1,20 @@
 import {
   Component,
-  OnInit,
-  ViewChild,
   ElementRef,
-  OnDestroy,
-  NgZone,
-  Output,
   EventEmitter,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
 } from '@angular/core';
-
+import config from '@arcgis/core/config.js';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import Map from '@arcgis/core/Map';
 import MapView from '@arcgis/core/views/MapView';
 import BasemapGallery from '@arcgis/core/widgets/BasemapGallery';
 import Expand from '@arcgis/core/widgets/Expand';
-import config from '@arcgis/core/config.js';
+import Legend from '@arcgis/core/widgets/Legend';
 
 /**
  * A simple Esri map using the beta ES Modules build.
@@ -90,7 +90,7 @@ export class EsriMapComponent implements OnInit, OnDestroy {
 
     layer.load().then(() => {
       view.extent = layer.fullExtent;
-      this.layerReady.emit(layer);
+      this.zone.run(() => this.layerReady.emit(layer));
     });
 
     const basemapGallery = new BasemapGallery({
@@ -100,8 +100,12 @@ export class EsriMapComponent implements OnInit, OnDestroy {
     const bgExpand = new Expand({
       content: basemapGallery,
     });
-
     view.ui.add(bgExpand, 'top-right');
+
+    const legend = new Legend({
+      view,
+    });
+    view.ui.add(legend, 'bottom-left');
 
     this.view = view;
 
@@ -123,6 +127,8 @@ export class EsriMapComponent implements OnInit, OnDestroy {
   ): void {
     view
       .whenLayerView(layer)
-      .then((layerView) => this.layerViewReady.emit(layerView));
+      .then((layerView) =>
+        this.zone.run(() => this.layerViewReady.emit(layerView))
+      );
   }
 }

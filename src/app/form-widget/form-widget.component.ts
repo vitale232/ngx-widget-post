@@ -47,7 +47,7 @@ import { takeUntil } from 'rxjs/operators';
   ],
 })
 export class FormWidgetComponent implements OnInit, OnDestroy {
-  @Input() public blockGroups: string[] = undefined;
+  @Input() public blockGroups: string[];
 
   @Output() public valueChange = new EventEmitter<string>();
 
