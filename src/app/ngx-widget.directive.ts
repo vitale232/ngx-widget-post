@@ -16,6 +16,7 @@ export class NgxWidgetDirective implements OnInit, OnDestroy {
   private readonly _destroy$ = new Subject<null>();
 
   private hasView = false;
+  private viewElement: HTMLElement | undefined = undefined;
 
   // Use rxjs to handle `@Input`s reactively
   // Use the selector as the input name to accept as the default input to the directive.
@@ -42,10 +43,7 @@ export class NgxWidgetDirective implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    combineLatest([
-      this.view$.pipe(filter((mapView) => mapView != null)),
-      this.position$,
-    ])
+    combineLatest([this.view$, this.position$])
       .pipe(takeUntil(this._destroy$))
       .subscribe((params) => this.handleWidget(...params));
   }
@@ -60,11 +58,12 @@ export class NgxWidgetDirective implements OnInit, OnDestroy {
     position: __esri.UIAddPosition
   ): void {
     if (this.hasView) {
-      this.clear();
+      this.clear(view);
     }
 
     if (view != null && position != null) {
-      view.ui.add(this.render(), position);
+      this.viewElement = this.render();
+      view.ui.add(this.viewElement, position);
     }
   }
 
@@ -80,7 +79,10 @@ export class NgxWidgetDirective implements OnInit, OnDestroy {
     return element;
   }
 
-  private clear(): void {
+  private clear(view?: __esri.MapView): void {
+    if (view && this.viewElement) {
+      view.ui.remove(this.viewElement);
+    }
     this.viewContainerRef.clear();
     this.hasView = false;
   }
