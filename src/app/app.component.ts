@@ -3,7 +3,7 @@ import { Component, NgZone } from '@angular/core';
 @Component({
   selector: 'app-root',
   template: `
-    <h1>Angular Component as a Widget!</h1>
+    <h1>🤪 Angular Component as a Widget! 🤩</h1>
 
     <app-esri-map
       (viewReady)="onViewReady($event)"
