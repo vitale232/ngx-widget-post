@@ -30,13 +30,13 @@ import Legend from '@arcgis/core/widgets/Legend';
         padding: 0;
         margin: 0;
         height: 60vh;
-        width: 90%;
+        width: 100%;
       }
       #mapViewNode {
         padding: 0;
         margin: 0;
         height: 60vh;
-        width: 90%;
+        width: 100%;
       }
     `,
   ],
