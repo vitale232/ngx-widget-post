@@ -27,34 +27,18 @@ import { Component } from '@angular/core';
       </div>
     </app-esri-map>
     <div class="button-group">
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="onMoveWidgetClick('top-left')"
-      >
+      <button mat-raised-button (click)="onMoveWidgetClick('top-left')">
         Move Widget - Top Left
       </button>
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="onMoveWidgetClick('top-right')"
-      >
+      <button mat-raised-button (click)="onMoveWidgetClick('top-right')">
         Move Widget - Top Right
       </button>
     </div>
     <div class="button-group">
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="onMoveWidgetClick('bottom-left')"
-      >
+      <button mat-raised-button (click)="onMoveWidgetClick('bottom-left')">
         Move Widget - Bottom Left
       </button>
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="onMoveWidgetClick('bottom-right')"
-      >
+      <button mat-raised-button (click)="onMoveWidgetClick('bottom-right')">
         Move Widget - Bottom Right
       </button>
     </div>
@@ -69,6 +53,8 @@ import { Component } from '@angular/core';
       }
       .button-group {
         padding-top: 1.5rem;
+        display: flex;
+        justify-content: center;
       }
       button {
         margin-right: 5px;
