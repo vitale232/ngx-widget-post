@@ -8,6 +8,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+
 import config from '@arcgis/core/config.js';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import Map from '@arcgis/core/Map';
@@ -120,7 +121,7 @@ export class EsriMapComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.view) {
-      // destroy the map view
+      // destroy the map view. 4.17+
       this.view.destroy();
     }
   }
